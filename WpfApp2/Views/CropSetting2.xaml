@@ -1,0 +1,67 @@
+﻿<Window x:Class="WpfApp2.Views.CropSetting2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp2.Views"
+        xmlns:quan5="clr-namespace:WpfApp2.ViewModels"
+        mc:Ignorable="d"
+        Title="CropSetting2" Height="330" Width="373" ResizeMode="NoResize" Loaded="Window_Loaded"
+        Topmost="True">
+    
+    <Window.Resources>
+        <!--<quan5:CropSettingsViewModel x:Key="crop2VM"/>-->
+        <Style x:Key="q_list" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        </Style>
+    </Window.Resources>
+        
+   
+    <Canvas>
+        <Label Content="x:" Canvas.Left="12" Canvas.Top="12" Height="28" Name="label1" Width="60"
+               VerticalContentAlignment="Top"/>
+        <TextBox Text="{Binding CropXPosition, Mode=TwoWay}" Canvas.Left="72" Canvas.Top="12" Height="23" Name="textBox1" Width="60"
+                 VerticalContentAlignment="Bottom"/>
+        
+        <Label Content="y:" Canvas.Left="146" Canvas.Top="12" Height="28" Name="label2" Width="120"
+               VerticalContentAlignment="Top"/>
+        <TextBox Text="{Binding CropYPosition, Mode=TwoWay}" Canvas.Left="206" Canvas.Top="12" Height="23" Name="textBox2" Width="60"
+                 VerticalContentAlignment="Bottom"/>
+
+        <Label Content="name" Canvas.Left="274" Canvas.Top="12" Height="28" Width="72"
+               VerticalContentAlignment="Top"/>
+        <TextBox Text="{Binding CropID, Mode=TwoWay}" Canvas.Left="274" Canvas.Top="40" Height="22" Width="74"
+                 VerticalContentAlignment="Bottom"/>
+
+        <Label Content="width:" Canvas.Left="12" Canvas.Top="40" Height="29" Name="label3" Width="60"/>
+        <TextBox Text="{Binding CropWidth, Mode=TwoWay}" Canvas.Left="72" Canvas.Top="40" Height="23" Name="textBox3" Width="60"
+                 VerticalContentAlignment="Bottom"/>
+
+        <Label Content="height:" Canvas.Left="146" Canvas.Top="40" Height="30" Name="label4" Width="60"/>
+        <TextBox Text="{Binding CropHeight, Mode=TwoWay}" Canvas.Left="206" Canvas.Top="40" Height="23" Name="textBox4" Width="60"
+                 VerticalContentAlignment="Bottom"/>
+        
+        <ListView Canvas.Left="12" Canvas.Top="98" Height="183" Name="listView1" Width="253" 
+                  ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn HeaderContainerStyle="{StaticResource q_list}" Header="Region" Width="100" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                    <GridViewColumn HeaderContainerStyle="{StaticResource q_list}" Header="x" Width="40" DisplayMemberBinding="{Binding x1}"></GridViewColumn>
+                    <GridViewColumn HeaderContainerStyle="{StaticResource q_list}" Header="y" Width="40" DisplayMemberBinding="{Binding x2}"></GridViewColumn>
+                    <GridViewColumn HeaderContainerStyle="{StaticResource q_list}" Header="width" Width="40" DisplayMemberBinding="{Binding x3}"></GridViewColumn>
+                    <GridViewColumn HeaderContainerStyle="{StaticResource q_list}" Header="height" Width="40" DisplayMemberBinding="{Binding x4}"></GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Add" Name="addButton" Canvas.Left="122" Canvas.Top="70" Height="21" Width="69"
+                Command="{Binding AddCommand}"/>
+        <Button Content="Remove"  Name="removeButton" Canvas.Left="197" Canvas.Top="70" Height="21" Width="69"
+                Command="{Binding RemoveCommand}"/>
+        <Button Name="okButton" Canvas.Left="274" Canvas.Top="98" Content="Save edit" Height="22" Width="74"
+                Command="{Binding SaveEditCommand}"/>
+        <Button Name="closeButton" Canvas.Left="274" Canvas.Top="129" Content="Close" Height="22" Width="74" Click="closeButton_Click"
+                />
+        <Button Name="applyButton" Canvas.Left="274" Canvas.Top="160" Content="Apply" Height="22" Width="74"
+                Command="{Binding ApplyCropSettingsCommand}"/>
+    </Canvas>
+</Window>

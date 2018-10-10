@@ -1,0 +1,206 @@
+﻿<Window x:Class="WpfApp2.Views.MainWindow2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp2.Views"
+        xmlns:quan="clr-namespace:WpfApp2.ViewModels"
+        mc:Ignorable="d"
+        Title="MainWIndow2" Height="494" Width="800">
+    <Window.Resources>
+        <quan:OCRViewModel x:Key="quanOCR"/>
+    </Window.Resources>
+
+    <!--<Window.CommandBindings>
+        <CommandBinding Command="New" CanExecute="NewCommand_CanExecute" Executed="NewCommand_Executed"/>
+    </Window.CommandBindings>-->
+
+
+
+    <DockPanel DataContext="{Binding Mode=OneWay, Source={StaticResource quanOCR}}" Margin="0,0,-0.4,3.2">
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Command="New"/>
+                <MenuItem Header="_Open" Command="{Binding OpenImageCommand}">
+
+                </MenuItem>
+                <MenuItem Header="_Save"/>
+                <Separator/>
+                <MenuItem Header="_Exit" Command="{Binding CloseCommand}"/>
+            </MenuItem>
+
+            <MenuItem Header="_Edit">
+                <MenuItem Command="Cut"/>
+                <MenuItem Command="Copy"/>
+                <MenuItem Command="Paste"/>
+
+            </MenuItem>
+
+            <MenuItem Header="View">
+                <MenuItem Header="Image info" Command="{Binding OpenImgInfoCommand}"/>
+                <Separator/>
+                <MenuItem Header="Vision">
+                    <MenuItem Header="Character Block" IsCheckable="True" IsChecked="{Binding CharChecked}"/>
+                    <MenuItem Header="Word Block" IsCheckable="True" IsChecked="{Binding WordChecked}"/>
+                    <MenuItem Header="Line Block" IsCheckable="True" IsChecked="{Binding LineChecked}"/>
+                    <MenuItem Header="Paragraph Block" IsCheckable="True" IsChecked="{Binding ParaChecked}"/>
+
+                </MenuItem>
+            </MenuItem>
+
+
+
+            <MenuItem Header="_Tools">
+                <MenuItem Header="_Pre-processing"/>
+                <MenuItem x:Name="toolRun" Header="_Run OCR" Command="{Binding StartOCRCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="runOCR.png"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="P_ost-processing" IsCheckable="True" IsChecked="True"/>
+            </MenuItem>
+
+            <MenuItem Header="Color">
+                <MenuItem Header="Filter"/>
+                <MenuItem Header="Brightness"/>
+                <MenuItem Header="Contrast" Command="{Binding ContrastAdjustCommand}"/>
+                <MenuItem Header="ToGray"/>
+                <MenuItem Header="Invert"/>
+
+            </MenuItem>
+
+            <MenuItem Header="Image">
+                <MenuItem Header="Crop"/>
+                <MenuItem Header="Rotation"/>
+                <MenuItem Header="Deskew"/>
+
+            </MenuItem>
+
+            <MenuItem Header="_Helps">
+                <MenuItem Header="Tutorial"/>
+                <Separator/>
+                <MenuItem Header="_About" Click="About"/>
+            </MenuItem>
+
+        </Menu>
+
+
+        <Grid DataContext="{Binding Mode=OneWay, Source={StaticResource quanOCR}}" 
+              Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Image Source="{Binding ImageOne.FilePath}"
+                   HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Stretch="None" Name="inputImage"/>
+
+            <TextBox x:Name="textEditor" Grid.Column="1" Margin="10,10,0,0" 
+                     TextWrapping="Wrap" Text="{Binding OutPutText}"/>
+
+            <TextBox x:Name="textEditorTime" Height="32" TextWrapping="Wrap"  Margin="10,10,0,0" 
+                     Text="{Binding OutTime}" Grid.Column="1" VerticalAlignment="Bottom" IsUndoEnabled="False"/>
+
+            <Label x:Name="languageLabel" Content="Language"
+                   HorizontalAlignment="Left" 
+                   Grid.Row="2" Grid.Column="1"/>
+
+            <ComboBox ItemsSource="{Binding Path=GivenLang}" 
+                      HorizontalAlignment="Center" Height="30" Width="137"
+                      SelectedItem="{Binding Path=CurLang}" 
+                      Grid.Column="1" Grid.Row="2" HorizontalContentAlignment="Center"/>
+
+            <StackPanel Grid.Row="2"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left">
+
+                <Button Content="Open Image"
+                        Background="GhostWhite"
+                        Command="{Binding OpenImageCommand}"
+                        HorizontalAlignment="Center" VerticalContentAlignment="Stretch"/>
+
+                <Button Content="Click here to Run ORC"
+                        Background="GhostWhite" HorizontalAlignment="Center"
+                        Command="{Binding StartOCRCommand}" Margin="20,0,0,0.4" Width="159" VerticalContentAlignment="Stretch">
+
+                </Button>
+
+            </StackPanel>
+
+            <ProgressBar x:Name="loaddingBar" HorizontalAlignment="Right" 
+                         Height="8" Margin="270.8,19,0,0" Grid.Row="3" 
+                         VerticalAlignment="Bottom" Width="111" Grid.Column="1" 
+                         RenderTransformOrigin="0.5,0.5" Value="{Binding LoadingBar, Mode=OneWay}">
+                <ProgressBar.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleY="-1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </ProgressBar.RenderTransform>
+            </ProgressBar>
+
+            <CheckBox Content="RGB2Gray" 
+                      HorizontalAlignment="Left" VerticalAlignment="Center"
+                      IsChecked="{Binding RGB2GrayChecked, Mode=TwoWay}" 
+                      VerticalContentAlignment="Bottom" 
+                      Grid.Row="1" />
+
+            <CheckBox Content="BMP8Gray" HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      IsChecked="{Binding RGB2GrayChecked2, Mode=TwoWay}" Grid.Row="1"/>
+
+            <CheckBox Content="Deskew" HorizontalAlignment="Right"
+                      VerticalAlignment="Center"
+                      IsChecked="{Binding DeskewChecked}" Grid.Row="1"/>
+
+
+            <ItemsControl x:Name="itemControl" ItemsSource="{Binding RectItems}" >
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas x:Name="front_canvas" HorizontalAlignment="Left" 
+                                VerticalAlignment="Top"/>
+
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="{x:Type ContentPresenter}">
+                        <Setter Property="Canvas.Left" Value="{Binding Rect.X}"/>
+                        <Setter Property="Canvas.Top" Value="{Binding Rect.Y}"/>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Rectangle Stroke="{Binding  Colr}" StrokeThickness="2"  
+                                   Width="{Binding Rect.Width}" Height="{Binding Rect.Height}" Visibility="{Binding Visible}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+
+
+            <!--<Button Content="Save into Json" Grid.Column="1" HorizontalAlignment="Left" 
+                    Height="31" Margin="156,389,0,0" VerticalAlignment="Top" Width="89" Grid.RowSpan="2"
+                    Command="{Binding Save2Json}"/>-->
+            <!--<Canvas x:Name="front_canvas1" HorizontalAlignment="Left" Height="343" 
+                    VerticalAlignment="Top" Width="387" Background="#FFC5A690" Opacity="0"/>-->
+
+
+
+        </Grid>
+
+    </DockPanel>
+
+
+
+</Window>

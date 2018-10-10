@@ -1,0 +1,30 @@
+﻿<Window x:Class="WpfApp2.Views.ContrasAdjust"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp2.Views"
+        mc:Ignorable="d"
+        Title="ContrasAdjust" Height="450" Width="577.258">
+    <Grid>
+        <Canvas HorizontalAlignment="Left" Height="337" Margin="10,10,0,0" 
+                VerticalAlignment="Top" Width="459">
+            <Button Content="Apply" Height="34" Canvas.Top="362" Width="96" RenderTransformOrigin="0.74,-0.113" Canvas.Left="244"/>
+        </Canvas>
+        <Slider HorizontalAlignment="Right" Height="22" Margin="0,192,-92.8,0" 
+                VerticalAlignment="Top" Width="270" RenderTransformOrigin="0.5,0.5"
+                Value="50">
+            <Slider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-89.928"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Slider.RenderTransform>
+        </Slider>
+        <Button Content="Cancel" HorizontalAlignment="Left" Height="36" Margin="375,369,0,0" VerticalAlignment="Top" Width="94"/>
+        <Label Content="Contrast" HorizontalAlignment="Left" Height="34" Margin="500,30,0,0" VerticalAlignment="Top" Width="61"/>
+
+    </Grid>
+</Window>

@@ -1,0 +1,1 @@
+{"FilePath":"C:\\Users\\admin\\Desktop\\Quanap5\\WpfApp2\\TestData8\\1.PNG","Image":"file:///C:/Users/admin/Desktop/Quanap5/WpfApp2/TestData8/1.PNG"}
